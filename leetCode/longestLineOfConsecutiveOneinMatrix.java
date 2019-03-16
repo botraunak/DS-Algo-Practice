@@ -3,6 +3,7 @@ public class Solution {
     public int longestLine(int[][] M){
         if(M.length==0)
             return 0;
+            
         int ans = 0;
         int[][][] dp = new int[M.length][M[0].length][4];
         for(int i=0; i<dp.length; i++){
