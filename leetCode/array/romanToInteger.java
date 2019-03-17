@@ -1,35 +1,28 @@
 class Solution {
+    
+    public int getVal(Character s) {
+        if (s == 'I') return 1;
+        else if (s == 'V') return 5;
+        else if (s == 'X') return 10;
+        else if (s == 'L') return 50;
+        else if (s == 'C') return 100;
+        else if (s == 'D') return 500;
+        else if (s == 'M') return 1000;
+        return 0;
+    }
     public int romanToInt(String s) {
-        Stack<Integer> stack = new Stack<Integer>();
-        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
-        map.put('I', 1);
-        map.put('V', 5);
-        map.put('X', 10);
-        map.put('L', 50);
-        map.put('C', 100);
-        map.put('D', 500);
-        map.put('M', 1000);
         
         int num = 0;
-        stack.push(map.get(s.charAt(0)));
-        for (int i=1; i < s.length(); i++) {
-            int curr = map.get(s.charAt(i));
-           if (!stack.isEmpty()) {
-               int top = stack.peek();
-               if (top < curr) {
-                   num += (curr - top);
-                   stack.pop();
-               } else {
-                   stack.push(curr);
-               }
-           } else {
-               stack.push(curr);
-           }
-        }
-        
-        while (!stack.isEmpty()) {
-            int x = stack.pop();
-            num += x;
+        int i = 0;
+        for (i=0; i < s.length(); i++) {
+            int curr = getVal(s.charAt(i));
+            int next = (i + 1 < s.length()) ? getVal(s.charAt(i + 1)) : 0;
+            if (curr < next) {
+                num += (next - curr);
+                i = i + 1;
+            } else {
+                num += curr;
+            }
         }
         
         return num;
