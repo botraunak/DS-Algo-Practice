@@ -1,56 +1,31 @@
 class Solution {
+    
+    private int[][] co= { { -1, -1 }, { -1, 0 }, { -1, 1 }, { 0, -1 }, 
+                                  { 0, 1 }, { 1, -1 }, { 1, 0 }, { 1, 1 } };
+    
     public void gameOfLife(int[][] board) {
-        int m = board.length;
-        int n = board[0].length;
-        
-        int[][] res = new int[m][n];
-        for (int i=0; i < m; i++) {
-            for (int j=0;  j < n; j++) {
-                int liveN = 0;
-                int deadN = 0;
-                if (j > 0) {
-                    if (board[i][j-1] == 0) deadN++;
-                    else liveN++;
+        int[][] temp = new int[board.length][board[0].length];
+        int liveN = 0;
+        for(int i=0; i<board.length; i++){
+            for(int j=0; j<board[0].length; j++){
+                liveN = 0;
+                for(int k=0; k<8; k++){
+                    if( i+co[k][0] >=0 && i+co[k][0] < board.length
+                        && j+co[k][1] >=0 && j+co[k][1] < board[0].length){
+                        if(board[i+co[k][0]][j+co[k][1]] == 1)
+                            liveN++;
+                    }
                 }
-                if (j < n - 1) {
-                    if (board[i][j+1] == 0) deadN++;
-                    else liveN++;
-                }
-                if (i > 0) {
-                    if (board[i - 1][j] == 0) deadN++;
-                    else liveN++;   
-                }
-                if (i < m - 1) {
-                    if (board[i + 1][j] == 0) deadN++;   
-                    else liveN++;
-                }
-                if (i > 0 && j > 0) {
-                  if (board[i-1][j-1] == 0) deadN++;
-                  else liveN++;  
-                } 
-                if (i > 0 && j < n - 1) {
-                    if (board[i-1][j+1] == 0) deadN++;
-                    else liveN++;   
-                }
-                if (i < m - 1 && j > 0) {
-                    if (board[i+1][j-1] == 0) deadN++;
-                    else liveN++;
-                } 
-                if (i < m - 1 && j < n - 1) {
-                  if (board[i+1][j+1] == 0) deadN++;
-                  else liveN++;  
-                } 
-                
-                if (liveN < 2) res[i][j] = 0;
-                else if (liveN >= 2 && liveN <= 3 && board[i][j] == 1) res[i][j] = 1;
-                else if (liveN > 3) res[i][j] = 0;
-                else if (liveN == 3 && board[i][j] == 0) res[i][j] = 1;
+                if (liveN < 2) temp[i][j] = 0;
+                else if (liveN >= 2 && liveN <= 3 && board[i][j] == 1) temp[i][j] = 1;
+                else if (liveN > 3) temp[i][j] = 0;
+                else if (liveN == 3 && board[i][j] == 0) temp[i][j] = 1;
             }
         }
         
-        for (int i=0; i < m; i++) {
-            for (int j=0; j < n; j++) {
-                board[i][j] = res[i][j];
+        for(int i=0; i<board.length; i++){
+            for(int j=0; j<board[0].length; j++){
+                board[i][j] = temp[i][j];
             }
         }
     }
