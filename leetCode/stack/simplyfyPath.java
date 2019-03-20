@@ -5,11 +5,12 @@ class Solution {
         
         StringBuilder directoryBuilder = new StringBuilder();
         int opCount = 0;
-        for (int i=0; i < path.length(); i++) {
-            char c = path.charAt(i);
+        char[] patha = path.toCharArray();
+        for (int i=0; i < patha.length; i++) {
+            char c = patha[i];
             if (c == '/') {
                 opCount++;
-                if (opCount <= 1) {
+                if (opCount == 1) {
                     String s = directoryBuilder.toString();
                     if (s.equals("..")) {
                         if (!dirs.isEmpty()) dirs.pop();
@@ -17,7 +18,7 @@ class Solution {
                     else if (!s.equals(".") && !s.isEmpty()) {
                         dirs.push(s);
                     }
-                    directoryBuilder = new StringBuilder();
+                    directoryBuilder.setLength(0);
                 }
             } else {
                 opCount = 0;
@@ -35,11 +36,11 @@ class Solution {
         
         if (dirs.isEmpty()) return "/";
     
-        String canonicalPath = new String("");
+        directoryBuilder.setLength(0);
         while (!dirs.isEmpty()) {
-            canonicalPath = "/" + dirs.pop() + canonicalPath;
+            directoryBuilder.insert(0, "/" + dirs.pop());
         }
         
-        return canonicalPath;
+        return directoryBuilder.toString();
     }
 }
