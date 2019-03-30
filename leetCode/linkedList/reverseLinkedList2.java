@@ -12,19 +12,18 @@ class Solution {
     public ListNode reverseBetween(ListNode head, int m, int n) {
         if(m==n) return head;
         ListNode node = head;
-        int size = 1;
-        while(size < m-1){
+        int curr = 1;
+        while(curr < m-1){
             node = node.next;
-            size++;
+            curr++;
         }
         if(m>1){
             ListNode revEnd = node.next;
-            ListNode temp;
-            helper(node.next, n, size+1);
+            helper(node.next, n, curr+1);
             node.next = revStart;
             revEnd.next = end;
         } else {
-            helper(node, n, size);
+            helper(node, n, curr);
             head.next = end;
             head = revStart;
         }
@@ -32,9 +31,9 @@ class Solution {
         return head;
     }
     
-    public ListNode helper(ListNode node, int n, int size){
-        if(size < n){
-            ListNode temp = helper(node.next, n, size+1);
+    public ListNode helper(ListNode node, int n, int curr){
+        if(curr < n){
+            ListNode temp = helper(node.next, n, curr+1);
             temp.next = node;
             return temp.next;
         }
