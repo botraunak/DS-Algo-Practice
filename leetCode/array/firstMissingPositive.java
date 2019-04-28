@@ -1,30 +1,15 @@
 class Solution {
     public int firstMissingPositive(int[] nums) {
-        int replace = -1;
-        
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]>0){
-                replace = nums[i];
-                break;
-            }   
+        if(nums == null || nums.length==0) return 1;
+        int[] n = new int[nums.length+2];
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]>0 && nums[i]<=nums.length+1)
+                n[nums[i]] = 1;
         }
-        
-        if(replace == -1) return 1;
-        
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]<=0) nums[i] = replace;
+        for(int i=1; i<n.length; i++){
+            if(n[i]==0)
+                return i;
         }
-        
-        for(int i=0;i<nums.length;i++){
-            int cur = Math.abs(nums[i]);
-            if(cur>0&&cur<=nums.length){
-                nums[cur-1] = -Math.abs(nums[cur-1]);
-            }
-        }
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]>0) return i+1; 
-        }
-        return nums.length+1;
-        
+        return nums.length;
     }
 }
